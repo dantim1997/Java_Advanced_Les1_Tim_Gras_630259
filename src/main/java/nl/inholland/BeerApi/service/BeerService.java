@@ -15,7 +15,8 @@ public class BeerService {
         this.beers =  Arrays.asList(
                 new Beer(1L,"Hoop" , "ANKER", 14.00, "Zaandijk"),
                 new Beer(2l, "Texel", "Skuumkoppe", 1.80, "Texel"),
-                new Beer(3L, "Hoop", "Kaper",14.50, "Zaandijk")
+                new Beer(3L, "Hoop", "Kaper",14.50, "Zaandijk"),
+                new Beer(3L, "Hoop", "Anders",14.50, "Zaandijk")
         );
     }
 
