@@ -3,12 +3,11 @@ package nl.inholland.BeerApi.controller;
 import nl.inholland.BeerApi.model.Beer;
 import nl.inholland.BeerApi.service.BeerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,31 +20,23 @@ public class BeerController {
 
   @Autowired private BeerService service;
 
-  @RequestMapping(value = "", method = RequestMethod.GET)
-  public ResponseEntity getAllBeers() {
+  @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity getAllBeers() { return ResponseEntity.status(200).body(service.getAllBeers());}
 
-    List<Beer> beers = service.getAllBeers();
-    return ResponseEntity.status(200).body(beers);
-  }
-
-  @RequestMapping(value = "id/{id}")
-  public ResponseEntity GetBeerByID(@PathVariable String id) {
-
-    List<Beer> beers = service.getAllBeers();
-    for(Beer beer : beers){
-      if(beer.getId() == Long.parseLong(id)){
+  @RequestMapping(value = "id/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity GetBeerByID(@PathVariable("id") Integer id) {
+    for(Beer beer : service.getAllBeers()){
+      if(beer.getId() == id){
         return  ResponseEntity.status(200).body(beer);
       }
     }
     return ResponseEntity.status(400).body("ne beers found");
   }
 
-  @RequestMapping(value = "brand/{name}")
-  public ResponseEntity GetBeersByBrand(@PathVariable String name) {
-    List<Beer> beers = service.getAllBeers();
-
+  @RequestMapping(value = "brand/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity GetBeersByBrand(@PathVariable("name") String name) {
     List<Beer> brandBeers = new ArrayList<Beer>();
-    for(Beer beer : beers){
+    for(Beer beer : service.getAllBeers()){
       if(beer.getBrand().toLowerCase().equals(name.toLowerCase())){
         brandBeers.add(beer);
       }
@@ -71,5 +62,11 @@ public class BeerController {
       return  ResponseEntity.status(200).body(brandBeers);
     }
     return ResponseEntity.status(400).body("ne beers found");
+  }
+
+  @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity createBeer(@RequestBody Beer beer){
+    service.addBeer(beer);
+    return ResponseEntity.status(HttpStatus.CREATED).body(beer.getId());
   }
 }

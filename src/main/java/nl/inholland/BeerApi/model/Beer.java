@@ -1,14 +1,24 @@
 package nl.inholland.BeerApi.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Beer {
+
+    @Id
+    @SequenceGenerator(name = "beer_seq", initialValue =1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "beer_seq")
     private long id;
     private String brand;
     private String type;
     private double price;
     private String location;
 
-    public Beer(long id, String brand, String type, double price, String location ) {
-        this.id = id;
+    public Beer(){
+    }
+
+    public Beer(String brand, String type, double price, String location ) {
         this.brand = brand;
         this.type = type;
         this.price = price;
