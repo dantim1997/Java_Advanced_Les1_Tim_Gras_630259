@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface StockRepository extends CrudRepository<Stock, Integer> {
 
-    //public Iterable<Stock> getAllByQuantityGreaterThenEqualOrderByQuantity(int minimum);
+    public Iterable<Stock> getAllByQuantityGreaterThanEqualOrderByQuantity(int minimum);
 
    /* @Query("Select s.quantity * b.price from Stock s, Beer b where s.Beer.id = b.id and s.Beer.id=?1")
     int getQuantityByBeer(int id);*/

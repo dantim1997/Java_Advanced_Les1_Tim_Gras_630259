@@ -21,6 +21,6 @@ public class StockController {
 
     @RequestMapping(value = "/minValue/{value}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getBeerId(@PathVariable("value") Integer value){
-        return ResponseEntity.status(200).body(/*service.getStockMinimum(value)*/ "");
+        return ResponseEntity.status(200).body(service.getStockMinimum(value));
     }
 }

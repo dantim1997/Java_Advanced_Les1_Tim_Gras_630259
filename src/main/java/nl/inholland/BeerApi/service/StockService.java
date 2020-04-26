@@ -12,7 +12,7 @@ public class StockService {
     @Autowired
     StockRepository stockRepository;
 
-  /*  public List<Stock> getStockMinimum(int min){
-        //return (List<Stock>) stockRepository.getAllByQuantityGreaterThenEqualOrderByQuantity(min);
-    }*/
+   public List<Stock> getStockMinimum(int min){
+        return (List<Stock>) stockRepository.getAllByQuantityGreaterThanEqualOrderByQuantity(min);
+    }
 }
